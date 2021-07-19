@@ -11,6 +11,7 @@ from secrets import (
 
 from constants import (
     NUTRONIX_EXERCISE_ENDPOINT,
+    SHEETY_ADD_RECORD_ENDPOINT,
 )
 
 
@@ -50,7 +51,9 @@ def extract_workout_data_from(text):
 
 
 def persist(workout_data):
-    pass
+    for workout in workout_data:
+        response = requests.post(data=json.dumps(workout), url=SHEETY_ADD_RECORD_ENDPOINT)
+        print(f"Saving workout {workout['exercise']} {'succeeded' if response.status_code == 200 else 'failed'}")
 
 
 workout_text = input("Please write about your exercise: ")
